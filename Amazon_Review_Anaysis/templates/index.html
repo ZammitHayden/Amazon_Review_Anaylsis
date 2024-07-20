@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <title>My Flask App</title>
+</head>
+<body>
+<header>
+    <img src="{{ url_for('static', filename='images/amazon-logo.png') }}" alt="amazon-logo">
+    <h1>Review Sentiment</h1> 
+</header>
+<div class="Instructions">
+    <h3>Instructions:</h3>
+    <p>1. Find a product on Amazon.com</p>  
+    <p>2. Copy and paste the Product URL in the input field below</p>  
+    <p>3. Press the button "Analyze"</p>  
+    <p>4. View the sentiment analysis results</p> 
+</div>  
+<div class="input-container">
+    <form action="/submit" method="GET">
+        <label for="url-input">Enter URL:</label>
+        <input type="text" id="url-input" name="url">
+        <button type="submit" id="analyze-btn">Analyze</button>
+    </form>
+</div>
+<div id="result-container">
+    <h4>Results</h4>
+    <div>
+        {% if results %}
+            {% for result in results %}
+            <div class="result">
+                <p><strong>Important Sentences:</strong> {{ result.important_sentences }}</p>
+                <p><strong>Important Words:</strong> {{ result.important_words }}</p>
+                <p><strong>Result:</strong> {{ result.result }}</p>
+            </div>
+            {% endfor %}
+        {% else %}
+            <p>No result available.</p>
+        {% endif %}
+    </div>
+</div>
+</body>
+</html>
